@@ -67,10 +67,11 @@ public class MyCedarling {
         List<String> decisionLogs = cedarlingAdapter.getLogsByRequestId(res.getRequestId());
         Long nativeTime = null;
         
-        if (!decisionLogs.isEmpty()) {
-            JSONObject job = new JSONObject(decisionLogs.get(0));
-            nativeTime = job.optLongObject("decision_time_micro_sec", null);
-        }
+        if (decisionLogs.isEmpty()) return new Pair<>(elapsed, null);
+                
+        JSONObject job = new JSONObject(decisionLogs.get(0));
+        nativeTime = job.optLongObject("decision_time_micro_sec", null);
+    
         return new Pair<>(elapsed, 1000*nativeTime);    //nano seconds
 
     }
