@@ -67,7 +67,7 @@ public class MyCedarling {
         List<String> decisionLogs = cedarlingAdapter.getLogsByRequestId(res.getRequestId());
         Long nativeTime = null;
         
-        if (decisionLogs.isEmpty()) {
+        if (!decisionLogs.isEmpty()) {
             JSONObject job = new JSONObject(decisionLogs.get(0));
             nativeTime = job.optLongObject("decision_time_micro_sec", null);
         }
