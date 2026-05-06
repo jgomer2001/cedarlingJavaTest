@@ -56,12 +56,13 @@ public class MyCedarling {
     private Pair<Long, Long> authorize(Map<String, String> tokens, String action, Map<String, Object> resource,
             JSONObject context) throws Exception {
 
+        JSONObject resrc = new JSONObject(resource);
         List<TokenInput> tokenInputs = new ArrayList<>();
         tokens.entrySet().forEach(e -> tokenInputs.add(new TokenInput(e.getKey(), e.getValue())));        
             
         long elapsed = System.nanoTime();
         MultiIssuerAuthorizeResult res = cedarlingAdapter.authorizeMultiIssuer(tokenInputs, action,
-                new JSONObject(resource), context);
+                resrc, context);
         elapsed = System.nanoTime() - elapsed;     
 
         List<String> decisionLogs = cedarlingAdapter.getLogsByRequestId(res.getRequestId());
